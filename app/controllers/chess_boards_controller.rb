@@ -6,7 +6,7 @@ class ChessBoardsController < ApplicationController
 
     render json: response
   rescue StandardError => e
-    render json: { status: 'FAILED', message: e.message }
+    render json: { status: :failed, message: e.message }
   end
 
   def get_shortest_path

@@ -6,5 +6,4 @@ Rails.application.routes.draw do
       get 'get_shortest_path'
     end
   end
-
 end

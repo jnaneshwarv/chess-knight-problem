@@ -17,7 +17,7 @@ class ChessBoard < ApplicationRecord
   # Converts position to char
   # For Ex: (8,1) => H1
   def to_char(x, y)
-    "#{char_mapping.key(x)}#{y}"
+    "#{char_mapping.key(x).upcase}#{y}"
   end
 
   # Gets the shortest path from source to destination using BFS algorithm
@@ -61,12 +61,12 @@ class ChessBoard < ApplicationRecord
   end
 
   # Returns the path taken to reach the destination
-  def path_to_destination(knights_path, start_knight_movement)
+  def path_to_destination(knights_path, inital_knight_position)
     steps_taken = []
     loop do
       steps_taken << to_char(knights_path[:position][0], knights_path[:position][1])
 
-      if knights_path == start_knight_movement
+      if knights_path == inital_knight_position
         return steps_taken.reverse.to_sentence
       end
 
@@ -77,7 +77,7 @@ class ChessBoard < ApplicationRecord
   # Saves the given knight's position and
   # returns the board id
   def save
-    if valid_position?(knight_position)
+    if self.class.valid_position?(knight_position)
       unique_board_id = board_id
       redis_conn.set(unique_board_id, knight_position)
 
@@ -94,17 +94,18 @@ class ChessBoard < ApplicationRecord
 
   # Adds all possible destinations with respect to the knight's position
   def add_possible_destination(position, knights_action, knights_path)
+
     possible_destinations = possible_destinations(position)
 
     possible_destinations.each do |possible_destination|
-      add_movement(possible_destination, knights_action, knights_path)
+      add_path(possible_destination, knights_action, knights_path)
     end
   end
 
   # Add destination to visited destinations
   # Adds destination with respect to the action taken by knight and
-  # adds the path taken to destination to src to track.
-  def add_movement(destination, knights_action, knights_path)
+  # adds the path taken to destination to source to track.
+  def add_path(destination, knights_action, knights_path)
     visited_destinations << destination
     knights_path << { position: destination, source: knights_action }
   end
@@ -116,7 +117,7 @@ class ChessBoard < ApplicationRecord
 
   # Checks if the position is valid
   def self.valid_position?(char)
-    chess_board = ChessBoard.new
+    chess_board = ChessBoard.new(char)
     position = chess_board.split_char(char)
     chess_board.within_board?(position[0], position[1])
   end
@@ -128,7 +129,7 @@ class ChessBoard < ApplicationRecord
     end
   end
 
-  # Gets the knight's position by providing baord id
+  # Gets the knight's position by providing board id
   def self.find(board_id)
     redis_conn.get(board_id)
   end
