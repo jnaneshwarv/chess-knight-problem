@@ -1,9 +1,9 @@
 ## Chess knight problem
-This project intends to find the shortest path taken by a knight from source to destination in a chess board.
+This project intends to find the shortest path taken by a knight from source to destination in a chess board by using ruby on rails.
 
 ## Setup
 * Run `bundle install` to install all gems
-* Run `rake db:migrate`
+* Run `rake db:migrate` to run migrations.
 * Run `rails s` to start the server.
 
 ## Actions
