@@ -3,6 +3,7 @@ This project intends to find the shortest path taken by a knight from source to 
 
 ## Setup
 * Run `bundle install` to install all gems
+* Run `rake db:migrate`
 * Run `rails s` to start the server.
 
 ## Actions
