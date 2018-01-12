@@ -1,24 +1,31 @@
-# README
+## Chess knight problem
+This project intends to find the shortest path taken by a knight from source to destination in a chess board.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
+* Run `bundle install` to install all gems
+* Run `rails s` to start the server.
 
-Things you may want to cover:
+## Actions
+There are two end points for this problem. 
+* First end pint takes the inital position of the knight.
+```
+End-point: http://localhost:3000/chess_boards
+Method: POST
+Params: { knight_position: "H1" }
+```
+Response: You will get success status along with unique id called board_id<br/>
 
-* Ruby version
 
-* System dependencies
+* The other end point takes the board_id that was taken from previous end point's response.
+```
+End-point: http://localhost:3000/chess_boards/get_shortest_path
+Method: GET<br/>
+Params: {
+  board_id: <string>, 
+  destination: G2
+}
+```
+Response: You will get the shortest path taken by knight as response(H1, G3, H5, F4, and G2).
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Note
+* Port may differ when run locally. Please change the end point's accordingly.
