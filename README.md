@@ -28,5 +28,8 @@ Params: {
 ```
 Response: You will get the shortest path taken by knight as response(H1, G3, H5, F4, and G2).
 
+## Test
+* Run `rspec` to run test cases.
+
 # Note
 * Port may differ when run locally. Please change the end point's accordingly.
